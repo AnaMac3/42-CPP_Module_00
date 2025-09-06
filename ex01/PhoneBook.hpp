@@ -6,7 +6,7 @@
 /*   By: amacarul <amacarul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 16:44:25 by amacarul          #+#    #+#             */
-/*   Updated: 2025/09/06 14:42:08 by amacarul         ###   ########.fr       */
+/*   Updated: 2025/09/06 15:57:24 by amacarul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,16 @@
 # include "Contact.hpp"
 # include <iostream>
 # include <string>
+# include <sstream> //para istringstream
+# include <iomanip> //para setw
 
 class PhoneBook {
 	private:
 		//lo que solo se vaya a usar dentro
 		Contact _contacts[8];
 		int		_index;
+		
+		std::string _truncate(const std::string& str, std::size_t width);
 	
 	public: 
 		//lo que se vaya a usar fuera del código de la clase

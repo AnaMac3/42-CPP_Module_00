@@ -6,7 +6,7 @@
 /*   By: amacarul <amacarul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 16:41:57 by amacarul          #+#    #+#             */
-/*   Updated: 2025/09/06 14:03:32 by amacarul         ###   ########.fr       */
+/*   Updated: 2025/09/06 15:45:42 by amacarul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,9 @@ class Contact { //the class
 		std::string fname;
 		std::string lname;
 		std::string nick;
-		
-	
+		std::string phone;
+		std::string secret;
+
 	private:
 	//lo que solo se vaya a usar dentro
 };

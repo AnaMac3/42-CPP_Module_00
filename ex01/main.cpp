@@ -6,7 +6,7 @@
 /*   By: amacarul <amacarul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 16:52:40 by amacarul          #+#    #+#             */
-/*   Updated: 2025/09/06 14:40:42 by amacarul         ###   ########.fr       */
+/*   Updated: 2025/09/06 16:01:05 by amacarul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ int	main(void)
 			myPhoneBook.add();
 		if (command == "SEARCH")
 			myPhoneBook.search();
+		if (command == "EXIT")
+			return (0);
 	}
 
 	
