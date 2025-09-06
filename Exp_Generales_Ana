@@ -87,10 +87,16 @@ Exercise 01: My Awesome PhoneBook
 String class -> https://cplusplus.com/reference/string/string/#google_vignette
 IO Manipultors -> https://cplusplus.com/reference/iomanip/
 	
+	Más cosas (fuente: guideline ->	https://42-cursus.gitbook.io/guide/4-rank-04/cpp-00-04-doing/cpp00)
+	- Función constructora: método especial de una clase que se llama automáticamente cuando se crea un nuevo objeto de esa clase. Se puede tener un constructor vacío y un segundo constructor que haga algo - puede tener valores por defecto o se puede llamar con esos argumentos -. Como las funciones constructoras se llaman al crear un objeto de una clase específica, se pueden especificar valores por defecto.
+	- Las funciones de una clase las definimos en el hpp y las declaramos en el cpp
+	- Initialization lists: pone el atributo de clase en base al valor entre paréntesis
+	- Member functions: operadores o funciones delcarados como miembros de una clase.
 	
 	
-	
-	
+
+Guideline -> https://42-cursus.gitbook.io/guide/4-rank-04/cpp-00-04-doing/cpp00	
+w3school -> https://www.w3schools.com/cpp/default.asp	
 	
 	
 	
