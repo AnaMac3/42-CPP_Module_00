@@ -6,7 +6,7 @@
 /*   By: amacarul <amacarul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 16:44:25 by amacarul          #+#    #+#             */
-/*   Updated: 2025/09/06 15:57:24 by amacarul         ###   ########.fr       */
+/*   Updated: 2025/09/06 16:14:08 by amacarul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@
 # define PHONEBOOK_HPP
 
 # include "Contact.hpp"
-# include <iostream>
-# include <string>
-# include <sstream> //para istringstream
-# include <iomanip> //para setw
+# include <iostream> //std::cin, std::cout, std::endl
+# include <string> //std::string
+# include <sstream> //std::istringstream, std::ostringstream
+# include <iomanip> //std::setw, std::setfill, std::setprecision
 
 class PhoneBook {
 	private:

@@ -6,7 +6,7 @@
 /*   By: amacarul <amacarul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 16:52:40 by amacarul          #+#    #+#             */
-/*   Updated: 2025/09/06 16:01:05 by amacarul         ###   ########.fr       */
+/*   Updated: 2025/09/06 16:15:11 by amacarul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,33 +26,6 @@ EXIT
 
 int	main(void)
 {
-	//tiene que leer el input del usuario (readline?)
-
-	//si es ADD:
-		//PhoneBook::add
-	
-	//si es SEARCH
-		//PhoneBook::search
-
-	//si es EXIT
-		//exit
-	
-
-	//PRUEBA_1
-	std::cout << "Prueba 1: " << std::endl;
-	//crear un objeto de contact:
-	Contact myObj;
-	//acceder a sus atributos:
-	myObj.fname = "Nombre";
-	myObj.lname = "Apellido";
-	myObj.nick = "Nick name";
-	//devolver en stdout
-	std::cout << myObj.fname << std::endl;
-	std::cout << myObj.lname << std::endl;
-	std::cout << myObj.nick << std::endl;
-
-	//PRUEBA_2
-	std::cout << "Prueba 2: " << std::endl;
 	//crear objeto de PhoneBook
 	PhoneBook myPhoneBook;
 	std::string command;
@@ -77,7 +50,5 @@ int	main(void)
 		if (command == "EXIT")
 			return (0);
 	}
-
-	
 	return (0);
 }
