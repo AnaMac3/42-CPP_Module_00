@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 11:49:33 by root              #+#    #+#             */
-/*   Updated: 2025/09/08 13:10:32 by root             ###   ########.fr       */
+/*   Updated: 2025/09/08 16:29:39 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ Account::Account(void)
 	
 }
 
-Account::Account( int initial_deposit ) //inicialización de atributos de cuenta individual
+Account::Account( int initial_deposit )
 {
 	this->_accountIndex = Account::_nbAccounts; //current index
 	this->_amount = initial_deposit;			//current amount
@@ -39,28 +39,25 @@ Account::Account( int initial_deposit ) //inicialización de atributos de cuenta
 	Account::_nbAccounts ++; //incrementa total de cuentas
 	Account::_totalAmount += initial_deposit; //suma al total global 
 	
-	Account::_displayTimestamp(); //hay que escribir esta función
+	Account::_displayTimestamp();
 	std::cout << "index:" << this->_accountIndex
-			  << ";amount" << this->_amount
-			  << ";created" << std::endl;
-	//en formato: [19920104_091532] index:0;amount:42;created
-    
+			  << ";amount:" << this->_amount
+			  << ";created" << std::endl;   
 }
 
 //------------------------DESTRUCTOR                    ------------------------
-Account::~Account( void )
+Account::~Account(void)
 {
-	Account::_displayTimestamp(); //hay que escribir esta función
+	Account::_displayTimestamp();
 	std::cout << "index:" << this->_accountIndex
-			  << ";amount" << this->_amount
+			  << ";amount:" << this->_amount
 			  << ";closed" << std::endl;
-	//en formato: [19920104_091532] index:0;amount:42;closed
 }
 
 //------------------------PRIVATE HELPER FUNCTIONS      ------------------------
-static void	_displayTimestamp( void )
+void	Account::_displayTimestamp(void)
 {
-	std::time_t t = std::time(nullptr);	//current time
+	std::time_t t = std::time(0);	//current time
 	std::tm* now = std::localtime(&t);	//convert to local time
 
 	//Print in format [YYYYMMDD_HHMMSS]
@@ -77,58 +74,106 @@ static void	_displayTimestamp( void )
 
 //------------------------PUBLIC FUNCTIONS    		    ------------------------
 
-static int	getNbAccounts( void )
+//Static getters
+int	Account::getNbAccounts( void )
 {
-    
+	return (Account:: _nbAccounts);
 }
 
-static int	getTotalAmount( void )
+int	Account::getTotalAmount( void )
 {
-    
+	return (Account:: _totalAmount);
 }
 
-static int	getNbDeposits( void )
+int	Account::getNbDeposits( void )
 {
-    
+    return (Account:: _totalNbDeposits);
 }
 
-static int	getNbWithdrawals( void )
+int	Account::getNbWithdrawals( void )
 {
-    
+    return (Account:: _totalNbWithdrawals);
 }
 
-static void	displayAccountsInfos( void )
+//--------------------
+
+void	Account::displayAccountsInfos( void )
 {
-    //imprime estado global de todas las cuentas 
-    //[19920104_091532] accounts:8;total:20049;deposits:0;withdrawals:0
+	Account::_displayTimestamp();
+	std::cout << "accounts:" << Account::getNbAccounts()
+			  << ";total:" << Account::getTotalAmount()
+			  << ";deposits:" << Account::getNbDeposits()
+			  << ";withdrawals:" << Account::getNbWithdrawals() 
+			  << std::endl;
 }
 
-
-void	makeDeposit( int deposit )
+void	Account::makeDeposit( int deposit )
 {
-    //aumenta el saldo de la cuenta y actualiza los contadores globales
+	int previousAmount = this->_amount;
+	
+	//Update account values
+	this->_amount = previousAmount + deposit;
+	this->_nbDeposits ++;
+
+	//Update global values
+	Account::_totalAmount += deposit;
+	Account::_totalNbDeposits ++;
+
+	//Log	
+	Account::_displayTimestamp();
+	std::cout << "index:" << this->_accountIndex
+			  << ";p_amount:" << previousAmount
+			  << ";deposit:" << deposit
+			  << ";amount:" << this->_amount
+			  << ";nb_deposits:" << this->_nbDeposits
+			  << std::endl;
 }
 
-bool	makeWithdrawal( int withdrawal )
+bool	Account::makeWithdrawal( int withdrawal )
 {
-    //disminuye el saldo si hay suficiente y actualiza los contadores
-    //supongo que este tendrá que llamar a checkAmount
+	int previousAmount = this->_amount;
+
+	//Check if there is enough balance
+	if (checkAmount() < withdrawal)
+	{
+		Account::_displayTimestamp();
+		std::cout << "index:" << this->_accountIndex
+			 	  << ";p_amount:" << previousAmount
+			 	  << ";withdrawal:refused" << std::endl;
+		return (false);
+	}
+	
+	//Update account values
+	this->_amount -= withdrawal;
+	this->_nbWithdrawals ++;
+
+	//Update global values
+	Account::_totalAmount -= withdrawal;
+	Account::_totalNbWithdrawals ++;
+
+	//Log	
+	Account::_displayTimestamp();
+	std::cout << "index:" << this->_accountIndex
+			  << ";p_amount:" << previousAmount
+			  << ";withdrawal:" << withdrawal
+			  << ";amount:" << this->_amount
+			  << ";nb_withdrawals:" << this->_nbWithdrawals
+			  << std::endl;
+
+	return (true);
 }
 
-int		checkAmount( void )
+int		Account::checkAmount( void ) const
 {
-    
+	return (this->_amount) ;
 }
 
-void	displayStatus( void )
+void	Account::displayStatus( void ) const
 {
-    //imprime estado de la cuenta individual
-    //[19920104_091532] index:5;amount:0;created
-    //[19920104_091532] index:4;p_amount:1234;deposit:87;amount:1321;nb_deposits:1
-
-    //si no hay saldo suficiente para un retiro, imprime withdrawal:refused
-
-    //el constructor y el destructor imprimen created y closed.
-
-    //timestamps
+	Account::_displayTimestamp();
+	std::cout << "index:" << this->_accountIndex
+			  << ";amount:" << this->_amount
+			  << ";deposits:" << this->_nbDeposits
+			  << ";withdrawals:" << this->_nbWithdrawals
+			  << std::endl;
 }

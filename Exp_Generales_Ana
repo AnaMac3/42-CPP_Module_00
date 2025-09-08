@@ -91,9 +91,50 @@ IO Manipultors -> https://cplusplus.com/reference/iomanip/
 	- Función constructora: método especial de una clase que se llama automáticamente cuando se crea un nuevo objeto de esa clase. Se puede tener un constructor vacío y un segundo constructor que haga algo - puede tener valores por defecto o se puede llamar con esos argumentos -. Como las funciones constructoras se llaman al crear un objeto de una clase específica, se pueden especificar valores por defecto.
 	- Las funciones de una clase las definimos en el hpp y las declaramos en el cpp
 	- Initialization lists: pone el atributo de clase en base al valor entre paréntesis
-	- Member functions: operadores o funciones delcarados como miembros de una clase.
+	- Member functions: operadores o funciones declarados como miembros de una clase.
 	
+
+----------
+- Con & (x ej: Contact&) se pasa una referencia al objeto original, no se crea una copia, no ocupa memoria extra y se puede acceder directamente a los miembros del objeto. No es un puntero ni un array, es un alias seguro
+
+- std::istringstream ss(input) -> strd::istringstream es un flujo de entrada que toma un std::string como fuente. Aquí, ss es el objeto que actúa como flujo. Esta línea no convierte directamente a número, sino que prepara el string para extraer datos.
+	Luego hay que hacer ss >> number para convertir el contenido de ss a int de forma segura.
+
+- ss.eof() devuelve true si se ha llegado al final del flujo. Es para verificar que no quedó nada más en el string después de la conversión. En este caso, es para ver si hay letras o caracteres inválidos que no se convirtieron a int.
+
+- El operador >> extrae datos de un flujo (como std::cin o std::istringstram) y los convierte al tipo de variable de destino si es compatible.
+
+
+-----------
+
+Exercise 02: The Job Of Your Dreams
+	ex02
+	Makefile, Account.cpp Account.hpp test.cpp
+	Forbidden functions: None
+
+Situación: tienes que recrear un archivo perdido, que se borró por error.
+Compilando tests.cpp ves que el archivo que falta es Account.cpp. El header Account.hpp se salvó. También hay un archivo log. Quizás puedas usarlo para entender cómo estaba implemenetado Account.
+
+Hay que recrear el código de Account.cpp a partir del header, los logs y los tests. El código tiene que pasar los tests. El output de tu código tiene que hacer match perfecto con los outputs del file log (excepto por los timestamps).
+
+-> El orden en el que se llama a los destructores puede diferir dependiendo del compilador o el OS. Así que tus destructores pueden tener que llamarse en reverse order. 
+
+-> Exercise 02 no es mandatory para pasar este módulo
+
+---------
+Apuntes varios:
+
+	- std::vector<T> -> contenedor dinámico de C++ que almacena elementos de tipo T
+
+	- Por qué a veces es Account::_totalAmount y otras veces this->_amount?
+		- Atributos de instancia (no estáticos): cada objeto Account tiene su propia copia de estas variables (_amount, _nbDeposits, _accountIndex…); por eso podemos acceder a ellas con this->
+		- Atributos estáticos: solo hay una copia compartida por toda la clase (para todos los objetos), no pertenecen a un objeto concreto. A ellos se accede como Account::_totalAmount
 	
+	- Cómo sabe una función como makeDeposit() en qué índice de cuenta estamos? porque cada elemento o lo que sea tiene un índice único, y se le llama iterando a esto en el test (mirar eso luego)
+
+
+	- Como ver diferencias entre dos archivos bien? vimdiff file1 file2
+---------
 
 Guideline -> https://42-cursus.gitbook.io/guide/4-rank-04/cpp-00-04-doing/cpp00	
 w3school -> https://www.w3schools.com/cpp/default.asp	
