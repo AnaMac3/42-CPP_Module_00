@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amacarul <amacarul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 16:52:40 by amacarul          #+#    #+#             */
-/*   Updated: 2025/09/06 16:15:11 by amacarul         ###   ########.fr       */
+/*   Updated: 2025/09/08 10:36:24 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,10 @@ largo que la columna, el último char se reemplaza por un punto. Luego,
 se le pide al usuario el indice del contacto que quiere, y se le
 devuelve la infor del contacto
 EXIT
+
+El main es el que actua como interfaz de usuario, así que los mensajes de
+bienvenida se hacen desde aquí. PhoneBook solo se ocupa de la lógica de gestión
+de contactos. Separar lógica de negocio de interfaz de usuario.
 */
 
 int	main(void)
@@ -40,7 +44,7 @@ int	main(void)
 
 		if (std::cin.eof())
 		{
-			std::cout << "\nEOF detected, Exiting ..." << std::endl; //no se si tiene que hacer esto
+			std::cout << "\nEOF detected. Exiting ..." << std::endl; //no se si tiene que hacer esto
 			break ;
 		}
 		if (command == "ADD")
@@ -48,7 +52,10 @@ int	main(void)
 		if (command == "SEARCH")
 			myPhoneBook.search();
 		if (command == "EXIT")
-			return (0);
+		{
+			std::cout << "See you soon!" << std::endl;
+			break ;
+		}
 	}
 	return (0);
 }

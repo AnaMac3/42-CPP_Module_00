@@ -3,42 +3,58 @@
 /*                                                        :::      ::::::::   */
 /*   PhoneBook.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amacarul <amacarul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 16:44:57 by amacarul          #+#    #+#             */
-/*   Updated: 2025/09/06 16:08:59 by amacarul         ###   ########.fr       */
+/*   Updated: 2025/09/08 10:58:46 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PhoneBook.hpp"
-//otros includes
 
-/*array de contactos
-puede almacenar 8 contactos
-si se intenta meter un noveno, sustituye el más antiguo
-no dynamic allocation
-*/
-
-
-//class declaration
-PhoneBook::PhoneBook(void): _index(0) //inicialización de atributo en constructor, llama a una lista de inicialización,
-									//más eficiente que llamar dentro del cuerpoo del constructor
-									//por qué no hace falta inicializar aquí contacts, como el index?
-									//Contact tiene un constructor por defecto, asi que C++ lo llama automáticamente
-									//para cada uno. Cuando se construye PhoneBook, c++ automaticamente construye 8 objetos contact dentro del array,
-									//int no tiene constructor por defecto
+//------------------------CONSTRUCTOR                   ------------------------
+PhoneBook::PhoneBook(void): _totalContacts(0)
 {
-	
+	//_contacts array is automatically initialized
+	//C++ calls the default constructor of Contacts for each element
 }
 
-//destructor
+//------------------------DESTRUCTOR                    ------------------------
 PhoneBook::~PhoneBook(void)
 {
-    
+    //nothing to clean up manually
+	//C++ automatically calls destructors for each Contact in the array
 }
 
-//---------------------------------------------------------------------------//
-//FUNCIONES AUXILIARES/PRIVADAS
+//------------------------PRIVATE HELPER FUNCTIONS      ------------------------
+
+//Prompt the user for a string until it is not empty
+std::string PhoneBook::_getNonEmptyInput(const std::string& prompt)
+{
+	std::string input;
+	while (input.empty())
+	{
+		std::cout << prompt;
+		std::getline(std::cin, input); //read a full line from standard input
+
+		if (input.empty())
+			std::cout << "Mandatory field. Please enter a value." << std::endl;
+	}
+	return (input);
+}
+
+//Print the table header for contact display
+void	PhoneBook::_printTableHeader(void)
+{
+	//std::setw(n) sets the width of the next output
+	//Helps align columns for a neat table
+	std::cout << std::setw(10) << "Index" << "|"
+			  << std::setw(10) << "First Name" << "|"
+			  << std::setw(10) << "Last Name" << "|"
+			  << std::setw(10) << "Nickname" << "|" << std::endl;
+}
+
+//Truncate strings longer than width with a dot
 std::string	PhoneBook::_truncate(const std::string& str, std::size_t width)
 {
 	if (str.length() > width)
@@ -46,93 +62,99 @@ std::string	PhoneBook::_truncate(const std::string& str, std::size_t width)
 	return (str);
 }
 
-//----------------------------------------------------------------------//
-
-//función add
-void	PhoneBook::add(void)
+//Print a single row in the contact table
+void	PhoneBook::_printContactRow(const Contact& c)
 {
-	std::string fname, lname, nick, phone, secret;
-
-	std::cout << "Enter first name: ";
-	std::getline(std::cin, fname); //stdin::cin -> entrada estadar de c++, donde el programa lee datos del usuario desde el teclado
-
-	std::cout << "Enter last name: ";
-	std::getline(std::cin, lname);
-
-	std::cout << "Enter Nickname: ";
-	std::getline(std::cin, nick);
-
-	std::cout << "Enter Phone Number: ";
-	std::getline(std::cin, phone);
-
-	std::cout << "Enter Darkest Secret: ";
-	std::getline(std::cin, secret);
-
-	
-	//gestionar que si se han superado los 8 contactos, reemplace el más antiguo
-	int index = _index % 8;
-
-	_contacts[index].fname = fname;
-	_contacts[index].lname = lname;
-	_contacts[index].nick = nick;
-	_contacts[index].phone = phone;
-	_contacts[index].secret = secret;
-	_contacts[index].index = index + 1;
-
-	_index ++;
-
-	std::cout << "Contact added at index " << _contacts[index].index << " ✅" << std::endl;
+	std::cout << std::setw(10) << c.index << "|"
+			  << std::setw(10) << _truncate(c.fname, 10) << "|"
+			  << std::setw(10) << _truncate(c.lname, 10) << "|"
+			  << std::setw(10) << _truncate(c.nick, 10) << "|" << std::endl;
 }
 
-//función search
-void	PhoneBook::search(void)
+//Ask the user for a valid contact index. Returns -1 if input is invalid
+int	PhoneBook::_getValidIndex(int validContactsCount)
 {
-	if (_index == 0)
-	{
-		std::cout << "PhoneBook is empty. Add some contacts first." << std::endl;
-		return ;
-	}
-	//imprimir lista de contactos (MIRAR FORMATO)
-	//cabecera
-	std::cout << std::setw(10) << "Index" << "|"
-			  << std::setw(10) << "First Name" << "|"
-			  << std::setw(10) << "Last Name" << "|"
-			  << std::setw(10) << "Nickname" << "|" << std::endl;
-	
-	//mostrar cada contacto
-	//_index < 8 ? _index : 8 -> 
-	for (int i = 0; i < (_index < 8 ? _index : 8); i++)
-	{
-		std::cout << std::setw(10) << _contacts[i].index << "|"
-				  << std::setw(10) << _truncate(_contacts[i].fname, 10) << "|"
-				  << std::setw(10) << _truncate(_contacts[i].lname, 10) << "|"
-				  << std::setw(10) << _truncate(_contacts[i].nick, 10) << "|" << std::endl;
-	}
-	
 	std::string input;
 	std::cout << "Enter the contact index you want to search: ";
 	std::getline(std::cin, input);
 
-	//validar si es numero
-	//validar que es un valor entre 1 y 8
-	std::istringstream ss(input); //convierte el input en número de forma segura
+	std::istringstream ss(input); //std::istringstream converts to int safely
 	int	index;
-	if (!(ss >> index) || index < 1 || index > 8 || index > _index)
+	
+	//Validate input: must be a number within range [1, validContactsCount]
+	if (!(ss >> index) || !(ss.eof()) || index < 1 || index > validContactsCount)
 	{
 		std::cout << "Invalid index." << std::endl;
+		return (-1);
+	}
+	return (index);
+}
+
+//Print all details of a contact
+void	PhoneBook::_printFullContact(const Contact& c)
+{
+	std::cout << "First Name: " << c.fname << std::endl;
+	std::cout << "Last Name: " << c.lname << std::endl;
+	std::cout << "Nickname: " << c.nick << std::endl;
+	std::cout << "Phone Number: " << c.phone << std::endl;
+	std::cout << "Darkest Secret: " << c.secret << std::endl;
+}
+
+//------------------------PUBLIC FUNCTIONS    		    ------------------------
+
+void	PhoneBook::add(void)
+{
+	//Prompt user for all fields, cannot be empty
+	std::string fname = _getNonEmptyInput("Enter First Name: ");
+	std::string lname = _getNonEmptyInput("Enter Last Name: ");
+	std::string nick = _getNonEmptyInput("Enter Nickname: ");
+	std::string phone = _getNonEmptyInput("Enter Phone Number: ");
+	std::string secret = _getNonEmptyInput("Enter Darkest Secret: ");
+
+	//Circular buffer: overwrite oldes contact if more than 8
+	int arrayIndex = _totalContacts % 8;
+
+	//Safe contact
+	_contacts[arrayIndex].fname = fname;
+	_contacts[arrayIndex].lname = lname;
+	_contacts[arrayIndex].nick = nick;
+	_contacts[arrayIndex].phone = phone;
+	_contacts[arrayIndex].secret = secret;
+	_contacts[arrayIndex].index = arrayIndex + 1; //Displayed index: 1-8
+
+	_totalContacts ++;
+
+	std::cout << "Contact added at index " << _contacts[arrayIndex].index 
+			  << " ✅" << std::endl;
+}
+
+void	PhoneBook::search(void)
+{
+	//Exit if no contacts exist
+	if (_totalContacts == 0)
+	{
+		std::cout << "PhoneBook is empty. Add some contacts first." 
+				  << std::endl;
 		return ;
 	}
-	//convertir indice 0-7 en 1-8
-	int	realIndex = (index - 1) % 8; 
-	//convertir index a int para poder comparar con _contacts[index] no?
-	//int	i = std::stoi(input);
-	//si pide un index que no hay o no es un número, mensaje error
 	
-	//devolver la infor de ese contacto
-	std::cout << "First Name: " << _contacts[realIndex].fname << std::endl;
-	std::cout << "Last Name: " << _contacts[realIndex].lname << std::endl;
-	std::cout << "Nickname: " << _contacts[realIndex].nick << std::endl;
-	std::cout << "Phone Number: " << _contacts[realIndex].phone << std::endl;
-	std::cout << "Darkest Secret: " << _contacts[realIndex].secret << std::endl;
+	//Print table header
+	_printTableHeader();
+
+	//Print each stored contact (max 8)
+	int validContactsCount = (_totalContacts < 8 ? _totalContacts : 8);
+	for (int i = 0; i < validContactsCount; i++)
+		_printContactRow(_contacts[i]);
+	
+	//Ask user for an index
+	int index = _getValidIndex(validContactsCount);
+	if (index == -1)
+		return ;
+	
+	//Convert to array position [0 - 7]
+	int	arrayIndex = (index - 1) % 8; 
+	
+	//Print full contact information
+	_printFullContact(_contacts[arrayIndex]);
 }
 

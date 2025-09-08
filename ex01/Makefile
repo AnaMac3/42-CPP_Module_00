@@ -21,7 +21,7 @@ $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	@if [ -f $(OBJ) ]; then rm -f $(OBJ); fi
+	rm -f $(OBJ)
 
 fclean: clean
 	rm -f $(NAME)

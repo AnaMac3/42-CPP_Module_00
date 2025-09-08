@@ -3,24 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   Contact.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amacarul <amacarul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 16:45:48 by amacarul          #+#    #+#             */
-/*   Updated: 2025/09/06 14:08:52 by amacarul         ###   ########.fr       */
+/*   Updated: 2025/09/08 11:09:56 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Contact.hpp"
-//otros includes
 
-//class declaration
+//------------------------CONSTRUCTOR                   ------------------------
 Contact::Contact(void)
 {
-	
+	//Default constructor: nothing to initialize manually
+	//std::string fields are automatically empty, int 'index' default to 0
 }
 
-//destructor
+//------------------------DESTRUCTOR                    ------------------------
 Contact::~Contact(void)
 {
-	
+	//Nothing special needed, C++ automatically cleans up std::string
 }

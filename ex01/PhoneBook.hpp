@@ -3,49 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   PhoneBook.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amacarul <amacarul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 16:44:25 by amacarul          #+#    #+#             */
-/*   Updated: 2025/09/06 16:14:08 by amacarul         ###   ########.fr       */
+/*   Updated: 2025/09/08 11:05:31 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
-//definir estructura de la clase: variables(atributos), funciones(métodos) e interfac(pública/privada)
-//solo se ponen las declaraciones, qué tiene la clase, no el código completo de los métodos
 
 #ifndef PHONEBOOK_HPP
 # define PHONEBOOK_HPP
 
-# include "Contact.hpp"
-# include <iostream> //std::cin, std::cout, std::endl
-# include <string> //std::string
-# include <sstream> //std::istringstream, std::ostringstream
-# include <iomanip> //std::setw, std::setfill, std::setprecision
+# include "Contact.hpp"	//Contact class
+# include <iostream>	//std::cin, std::cout, std::endl
+# include <string>		//std::string
+# include <sstream>		//std::istringstream (convert strings to numbers)
+# include <iomanip>		//std::setw (column alignment for output)
 
 class PhoneBook {
 	private:
-		//lo que solo se vaya a usar dentro
-		Contact _contacts[8];
-		int		_index;
+		Contact _contacts[8];	//Array to store up to 8 contacts
+		int		_totalContacts;	//Number contacts (used for circular buffer)
 		
+		//-----------------------PRIVATE HELPER FUNCTIONS-----------------------
+		std::string	_getNonEmptyInput(const std::string& prompt);
+		void		_printTableHeader();
 		std::string _truncate(const std::string& str, std::size_t width);
+		void		_printContactRow(const Contact& c);
+		int			_getValidIndex(int validContactsCount);
+		void		_printFullContact(const Contact& c);
 	
 	public: 
-		//lo que se vaya a usar fuera del código de la clase
+		//-----------------------CONSTRUCTOR/DESTRUCTOR  -----------------------
+		PhoneBook();		//Constructor: initialize _totalContacts to 0
+		~PhoneBook();		//Destructor
 
-		//acciones que tiene que tener:
-		//add
-		//search
-
-		//algún tipo de enlace a Contact no?
-
-		PhoneBook();
-		~PhoneBook();
-		void	add();
-		void	search();
-		void	print();
-	
+		//-----------------------PUBLIC FUNCTIONS        -----------------------		
+		void	add();		//Add a new contact
+		void	search();	//Search for a contact and display full info
 };
 
 #endif
