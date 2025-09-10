@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 16:44:25 by amacarul          #+#    #+#             */
-/*   Updated: 2025/09/08 11:05:31 by root             ###   ########.fr       */
+/*   Updated: 2025/09/10 10:10:37 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 class PhoneBook {
 	private:
 		Contact _contacts[8];	//Array to store up to 8 contacts
-		int		_totalContacts;	//Number contacts (used for circular buffer)
+		int		_totalContacts;	//Total number contacts (used for circular buffer)
 		
 		//-----------------------PRIVATE HELPER FUNCTIONS-----------------------
 		std::string	_getNonEmptyInput(const std::string& prompt);

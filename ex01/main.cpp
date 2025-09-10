@@ -6,36 +6,34 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 16:52:40 by amacarul          #+#    #+#             */
-/*   Updated: 2025/09/08 10:36:24 by root             ###   ########.fr       */
+/*   Updated: 2025/09/10 10:50:33 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Contact.hpp"
 #include "PhoneBook.hpp"
-/*
-posibles inputs del usuario:
-ADD: guarda un nuevo contacto
-SEARCH: te saca la lista de contactos guardados en cuatro columnas
-(index, first name, last name, nickname) de 10 chars de ancho y con 
-un pipe como separador, alineadas a la derecha. Si el texto es más
-largo que la columna, el último char se reemplaza por un punto. Luego,
-se le pide al usuario el indice del contacto que quiere, y se le
-devuelve la infor del contacto
-EXIT
 
-El main es el que actua como interfaz de usuario, así que los mensajes de
-bienvenida se hacen desde aquí. PhoneBook solo se ocupa de la lógica de gestión
-de contactos. Separar lógica de negocio de interfaz de usuario.
+/**
+* @brief	Entry point of the program.
+*			This function acts as the user interface for the phonebook app.
+*			It handles user input and calls the appropriate PhoneBook methods.
+*			Possible user commands:
+*			- ADD: Prompts the user to add a new contact. Delegates the logic
+*			to PhoneBook::add()
+*			- SEARCH: Displays a summary table of stored contacts. Then asks
+*			the user to enter an index and displays the full contact details.
+*			Delegates the logic to PhoneBook::search().
+*			- EXIT: Exits the program gracefully
+*			
 */
 
 int	main(void)
 {
-	//crear objeto de PhoneBook
 	PhoneBook myPhoneBook;
 	std::string command;
 
 	std::cout << "Welcome to your PhoneBook!" << std::endl;
-	std::cout << "Choose the acction: ADD, SEARCH, EXIT" << std::endl;
+	std::cout << "Choose the action: ADD, SEARCH, EXIT" << std::endl;
 
 	while (true)
 	{
@@ -44,18 +42,22 @@ int	main(void)
 
 		if (std::cin.eof())
 		{
-			std::cout << "\nEOF detected. Exiting ..." << std::endl; //no se si tiene que hacer esto
+			std::cout << "\nEOF detected. Exiting ..." << std::endl;
 			break ;
 		}
 		if (command == "ADD")
 			myPhoneBook.add();
-		if (command == "SEARCH")
+		else if (command == "SEARCH")
 			myPhoneBook.search();
-		if (command == "EXIT")
+		else if (command == "EXIT")
 		{
 			std::cout << "See you soon!" << std::endl;
 			break ;
 		}
+		else
+		{
+			std::cout << "Invalid command. Try again." << std::endl;
+		}	
 	}
 	return (0);
 }

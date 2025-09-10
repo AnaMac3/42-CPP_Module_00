@@ -6,36 +6,53 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 16:44:57 by amacarul          #+#    #+#             */
-/*   Updated: 2025/09/08 11:58:14 by root             ###   ########.fr       */
+/*   Updated: 2025/09/10 10:40:11 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PhoneBook.hpp"
 
 //------------------------CONSTRUCTOR                   ------------------------
+/**
+* @brief	Construct a new PhoneBook with no contacts.
+*/
+
 PhoneBook::PhoneBook(void): _totalContacts(0)
 {
-	//_contacts array is automatically initialized
-	//C++ calls the default constructor of Contacts for each element
+	
 }
 
 //------------------------DESTRUCTOR                    ------------------------
+/**
+* @brief	Destroy the PhoneBook.
+*/
+
 PhoneBook::~PhoneBook(void)
 {
-    //nothing to clean up manually
-	//C++ automatically calls destructors for each Contact in the array
+    
 }
 
 //------------------------PRIVATE HELPER FUNCTIONS      ------------------------
 
-//Prompt the user for a string until it is not empty
+/**
+* @brief	Asks the user for a string until it is not empty.
+*			- Uses std::getline() to read an entire line of text from the stdin
+*			until a newline is found. 
+*			- If the string is empty, prints an error message and repeats the
+*			loop. The loop continues until the input is not empty.
+*
+* @param prompt	Message shown to the user.
+* @return std::string	A Non-empty string entered by the user.
+*/
+
 std::string PhoneBook::_getNonEmptyInput(const std::string& prompt)
 {
 	std::string input;
+
 	while (input.empty())
 	{
 		std::cout << prompt;
-		std::getline(std::cin, input); //read a full line from standard input
+		std::getline(std::cin, input);
 
 		if (input.empty())
 			std::cout << "Mandatory field. Please enter a value." << std::endl;
@@ -43,18 +60,28 @@ std::string PhoneBook::_getNonEmptyInput(const std::string& prompt)
 	return (input);
 }
 
-//Print the table header for contact display
+/**
+* @brief	Print the table header for contact display.
+* 			- std::setw(n) sets the width of the next output
+*			
+*/
+
 void	PhoneBook::_printTableHeader(void)
 {
-	//std::setw(n) sets the width of the next output
-	//Helps align columns for a neat table
 	std::cout << std::setw(10) << "Index" << "|"
 			  << std::setw(10) << "First Name" << "|"
 			  << std::setw(10) << "Last Name" << "|"
 			  << std::setw(10) << "Nickname" << "|" << std::endl;
 }
 
-//Truncate strings longer than width with a dot
+/**
+* @brief	Truncate strings longer than width and append a dot.
+*
+* @param str	The original string
+* @param width	The maximum allowed width
+* @return	A truncated string (with a dot if truncated).
+*/
+
 std::string	PhoneBook::_truncate(const std::string& str, std::size_t width)
 {
 	if (str.length() > width)
@@ -62,7 +89,12 @@ std::string	PhoneBook::_truncate(const std::string& str, std::size_t width)
 	return (str);
 }
 
-//Print a single row in the contact table
+/**
+* @brief	Print a single row (summary) of a contact.
+*
+* @param c	The contact to display.
+*/
+
 void	PhoneBook::_printContactRow(const Contact& c)
 {
 	std::cout << std::setw(10) << c.index << "|"
@@ -71,17 +103,35 @@ void	PhoneBook::_printContactRow(const Contact& c)
 			  << std::setw(10) << _truncate(c.nick, 10) << "|" << std::endl;
 }
 
-//Ask the user for a valid contact index. Returns -1 if input is invalid
+/**
+* @brief	Ask the user for a valid contact index.
+*			- std::getline(): reads a whole line from the user into a string
+*			- std::istringstream ss(): creates a string stream from the user
+*			input. This allows us to safely attempt to convert the string
+*			into a integer without crashing if the input is not numeric.
+*			- Checks if the input is a number in the valid range
+*				* ss >> index: tries to extract an integer from the string
+*				stream. If it fails, the operation returns false.
+*				* ss.eof(): checks if the entire input string has been consumed.
+*				This prevents partial inputs like "12abc" from being accepted.
+*				* Range chek: ensures the index is between 1 and 
+*				validContactsCount
+*			- If is not in the valid range, prints an error msg and returns -1 
+*			- Returns the index
+*
+* @param validContactsCount	Number of contacts currently stored
+* @return	The index (1-validContactsCount) or -1 if invalid.
+*/
+
 int	PhoneBook::_getValidIndex(int validContactsCount)
 {
 	std::string input;
 	std::cout << "Enter the contact index you want to search: ";
 	std::getline(std::cin, input);
 
-	std::istringstream ss(input); //std::istringstream converts to int safely
+	std::istringstream ss(input);
 	int	index;
 	
-	//Validate input: must be a number within range [1, validContactsCount]
 	if (!(ss >> index) || !(ss.eof()) || index < 1 || index > validContactsCount)
 	{
 		std::cout << "Invalid index." << std::endl;
@@ -90,7 +140,12 @@ int	PhoneBook::_getValidIndex(int validContactsCount)
 	return (index);
 }
 
-//Print all details of a contact
+/**
+* @brief	Print all details of a given contact.
+*
+* @param c	The contact to display.
+*/
+
 void	PhoneBook::_printFullContact(const Contact& c)
 {
 	std::cout << "First Name: " << c.fname << std::endl;
@@ -100,27 +155,36 @@ void	PhoneBook::_printFullContact(const Contact& c)
 	std::cout << "Darkest Secret: " << c.secret << std::endl;
 }
 
-//------------------------PUBLIC FUNCTIONS    		    ------------------------
+//------------------------PUBLIC METHODS    		    ------------------------
+
+/**
+* @brief	Add a new contact (overwrites oldest if full).
+*			- Prompt user for Contact fields
+*			- Computes arrayIndex using circular buffer logic to overwrite
+*			oldest contact if needed
+*			- Assign all entered fields to the corresponding Contact object
+*			- Set the contact's display index (1-8) for easier reference
+*			- Increments _totalContacts to keep track of total number of
+*			added contacts
+*
+*/
 
 void	PhoneBook::add(void)
 {
-	//Prompt user for all fields, cannot be empty
 	std::string fname = _getNonEmptyInput("Enter First Name: ");
 	std::string lname = _getNonEmptyInput("Enter Last Name: ");
 	std::string nick = _getNonEmptyInput("Enter Nickname: ");
 	std::string phone = _getNonEmptyInput("Enter Phone Number: ");
 	std::string secret = _getNonEmptyInput("Enter Darkest Secret: ");
 
-	//Circular buffer: overwrite oldes contact if more than 8
 	int arrayIndex = _totalContacts % 8;
 
-	//Safe contact
 	_contacts[arrayIndex].fname = fname;
 	_contacts[arrayIndex].lname = lname;
 	_contacts[arrayIndex].nick = nick;
 	_contacts[arrayIndex].phone = phone;
 	_contacts[arrayIndex].secret = secret;
-	_contacts[arrayIndex].index = arrayIndex + 1; //Displayed index: 1-8
+	_contacts[arrayIndex].index = arrayIndex + 1;
 
 	_totalContacts ++;
 
@@ -128,9 +192,23 @@ void	PhoneBook::add(void)
 			  << " ✅" << std::endl;
 }
 
+/**
+* @brief	Search and display a contact by index.
+*			- Checks if any contacts exists. If none, prints a message and
+*			returns
+*			- Prints the table header (_printTableHeader())
+*			- Prints each stored contact's summary row (_printContactRow())
+*			up to a maximum of 8 
+*			- Asks the user to enter a contact index using _getValdiIndex()
+*			- If the input is invalid (-1), exits the function
+*			- Converts the 1-based displayed index to the 0-based array position
+*			- Prints the full contact details (_printFullContact()) for the 
+*			selected contact
+*
+*/
+
 void	PhoneBook::search(void)
 {
-	//Exit if no contacts exist
 	if (_totalContacts == 0)
 	{
 		std::cout << "PhoneBook is empty. Add some contacts first." 
@@ -138,23 +216,18 @@ void	PhoneBook::search(void)
 		return ;
 	}
 	
-	//Print table header
 	_printTableHeader();
 
-	//Print each stored contact (max 8)
 	int validContactsCount = (_totalContacts < 8 ? _totalContacts : 8);
 	for (int i = 0; i < validContactsCount; i++)
 		_printContactRow(_contacts[i]);
 	
-	//Ask user for an index
 	int index = _getValidIndex(validContactsCount);
 	if (index == -1)
 		return ;
 	
-	//Convert to array position [0 - 7]
 	int	arrayIndex = (index - 1) % 8; 
 	
-	//Print full contact information
 	_printFullContact(_contacts[arrayIndex]);
 }
 

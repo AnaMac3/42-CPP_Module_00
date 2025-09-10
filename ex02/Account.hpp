@@ -7,10 +7,13 @@
 //                                                                            //
 // ************************************************************************** //
 
-
 #pragma once
 #ifndef __ACCOUNT_H__
 #define __ACCOUNT_H__
+
+#include <iostream>	//std::cout, std::endl
+#include <iomanip>	//std::setw, std:setfill
+#include <ctime>	//std::time, std::localtime
 
 // ************************************************************************** //
 //                               Account Class                                //
@@ -21,9 +24,7 @@ class Account {
 
 public:
 
-	typedef Account		t; //Dentro de la clase Account, se define un alias de tipo llamado t
-							//t es Account, no es un objeto ni un miembro diferente
-							//t ahora es un alias de Account
+	typedef Account		t;
 
 	static int	getNbAccounts( void );
 	static int	getTotalAmount( void );
@@ -42,17 +43,17 @@ public:
 
 private:
 
-	static int	_nbAccounts; //total accounts
-	static int	_totalAmount; //suma de todos los saldos
-	static int	_totalNbDeposits; //total de depósitos
-	static int	_totalNbWithdrawals; //total de retiros
+	static int	_nbAccounts;		//total accounts
+	static int	_totalAmount;		//total amount
+	static int	_totalNbDeposits;	//total deposits
+	static int	_totalNbWithdrawals;	//total withdrawals
 
 	static void	_displayTimestamp( void );
 
-	int				_accountIndex; //índice de cuenta
-	int				_amount; //saldo actual
-	int				_nbDeposits; //num de depósitos
-	int				_nbWithdrawals; //num de retiros
+	int				_accountIndex;	//account's index
+	int				_amount;		//account's amount
+	int				_nbDeposits;	//account's number of deposits
+	int				_nbWithdrawals;	//account's number of withdrawals
 
 	Account( void );
 
