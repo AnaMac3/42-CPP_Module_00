@@ -70,5 +70,5 @@ A **namespace** is a declarative region that provides scope to identifiers (vari
 ### More info:
 
 String class &rarr; [HERE](https://cplusplus.com/reference/string/string/#google_vignette)  
-IO Manipultors &rarr; [HERE](https://cplusplus.com/reference/iomanip/)  
-Guideline&rarr; [HERE](https://42-cursus.gitbook.io/guide/4-rank-04/cpp-00-04-doing/cpp00)  
+IO Manipulators &rarr; [HERE](https://cplusplus.com/reference/iomanip/)  
+Guideline &rarr; [HERE](https://42-cursus.gitbook.io/guide/4-rank-04/cpp-00-04-doing/cpp00)  
