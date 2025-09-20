@@ -1,52 +1,74 @@
 # **CPP Module 00**
 
-### Introducción
+42 Common Core CPP Module 00.  
+- Object-Oriented Programming in C++
+- Classes and objects
+- Encapsulation and data hiding
 
-Para aprender a ... primeras nociones de c++ y de la programación orientada a objetos.
+## Table of Contents
+- [Namespaces](#namespaces)
+- [Classes in Object-Oriented Programming](#classes-in-object-oriented-programming)
+- [More info](#more-info)
 
-### Conceptos nuevos
-- namespaces: qué son, cómo se usan... Un namespace es una forma de organizar el código y evitar conflictos entre nombres. std es el namespace de la biblioteca estándar de C++. Sintaxis para llamar a una función de la biblioteca estándar de C++:
-      std::<función>
-      ej.: std::cout
-  Pero aparte del namespace, también hay que incluir las librerias en las que están estas funciones.
+----------------------------------------
 
---------------------
+### Namespaces
+A **namespace** is a declarative region that provides scope to identifiers (variables, functions, classes, etc.). Its main purpose is to organize code and avoid naming conflicts.
+- The Standard Library is contained in the **std** namespace.
+- To access elements from it, you must:
+  - Include the appropiate header (<iostrem>, <string>, etc.)
+  - Qualify names with std::
 
-### Clases en la Programación Orientada a Objetos (POO)
-- Clases: una clase es una plantilla que define la estructura y el comportamiento de un objeto. Describe qué datos (atributos) y acciones/funciones (métodos) tendrán los objetos que se creen a partir de ella.
-- Un objeto es una instancia concreta de una clase, que puede tener sus propios valores de atributos, pero que comparte la estructura y los métodos de la clase.
+            #include <iostream>
+            
+            int main() {
+                std::cout << "Hello, World!" << std::endl;
+                return 0;
+            }
+
+### Classes in Object-Oriented Programming
+- A class is a blueprint that defines the structure (attributes) and behavior (methods) of objects.
+- An object is an instance of a class - it has its own values for attributes but shares the same methods and structure defined by the class.
   
-#### Elementos de una clase: 
-- **Constructor:** método especial de una clase que se llama automáticamente al crear un objeto. Puede ser:
-  - Constructor vacío (default)
-  - Constructor con parámetros (para inicializar atributos al crear el objeto)
-  - Con valores por defecto para los parámetros
-  - **Initialization list**: permite inicializar atributos directamente antes del cuerpo del constructor. Especialmente útil par atributos const o referencias.
-            MyClass(int val) : x(val) {}
-  - ¿Siempre hay que inicializar los atributos privados? No es obligatorio si el tipo tiene un constructor por defecto (como int o std::string), pero es buena práctica para evitar valores indeterminados.
-- **Destructor:** método especial que se llama automáticamente cuando un objeto deja de existir. Se usa para liberar recursos, cerrar archivos, liberar memoria dinámica, etc.
-- **Elementos privados y públicos:**
-  - public: accesible desde fuera de la clase
-  - private: accesible solo desde dentro de la clase
-  - **Encapsulación:** agrupa datos y funciones, protege los datos internos. 
-    - **Ventaja de atributos privados con getters/setters:** permite validar datos antes de asignarlos; aporta flexibilidad (si cambias el tipo de dato interno, no es necesario modificar todo el código, solo los getters/setters).
-- **Atributos miembro:** variables que representan el estado interno del objeto
-- **Métodos miembro:** operadores o funciones definidos dentro de la clase, que pueden interactuar con los atributos objeto.
-- **Funciones miembro 'static':** una función es 'static' cuando no depende de un objeto concreto, sino que pertenece a la clase en sí. No puede acceder a atributos no estáticos (que pertenecen a objetos), solo a otros atributos/métodos 'static'. Útil para contadores globales, helpers que aplican a la clase completa, o información compartida entre todos los objetos.
-- **Acceso a atributos/métodos dentro de la clase:**
-  - 'this->atributo': referencia al atributo del objeto actual.
-  - 'Clase::atributo': referencia a un atributo o método estático de la clase.
+#### Elements of a class:  
+- **Constructor:** a special method automatically called when an object is created.
+  - Default constructor (no parameters)
+  - Parametrized constructor
+  - Constructor with default values
+  - **Initialization list**: initializes members before the constructor body - neccesary for const members or references.
+ 
+          class MyClass
+          {
+                int x;
+                public:
+                      MyClass(int val) : x(val) {} //initialization list
+          }
+    
+- **Destructor:** a special method automatically called when an object goes out of scope. Used to release resources (close files, free dynamic memory, etc.).
+- **Public and Private Members**
+  - public: accesible from outside the class
+  - private: accesible only within the class
+  - **Encapsulation:** grouping data and functiions together while restricting direct access to internal details.
+    - Benefit of private attributes with getters/setters:
+      - Input validation
+      - Flexibility (implementation changes won't break external code)
+- **Member Attributes (fields):** variables that store the internal state of the object
+- **Member Functons (methods):** functions that operate on the object's attributes
+- **Static members:** beling to the class itself, not to a specific object.
+  - Cannot access non-static members
+  - Useful for counters, helpers, or shared state
+- **Accessing members within a class:**
+  - 'this->atribute': refers to the current object's member
+  - 'Class::atribute': refers to a static member of the class
 
-#### Ventajas de usar clases: 
-- Encapsulación: datos y funciones relacionadas se agrupan en el mismo bloque
-- Reutilización
-- Abstracción
-- Organización y claridad: modularidad
+#### Advanges of Classes: 
+- Encapsulation: keep related data and methods together
+- Reusability: define once, instantiate multiple times
+- Abstraction: hide implementation details behind an interface
+- Modularity: improves organizaton and maintainability
 
------------------------
-Para ex02: diferencias entre dos archivos: vimdiff file1 file2
+### More info:
 
-Más infor:
-String class -> https://cplusplus.com/reference/string/string/#google_vignette
-IO Manipultors -> https://cplusplus.com/reference/iomanip/
-Guideline ->	https://42-cursus.gitbook.io/guide/4-rank-04/cpp-00-04-doing/cpp00
+String class &rarr; [HERE](https://cplusplus.com/reference/string/string/#google_vignette)  
+IO Manipultors &rarr; [HERE](https://cplusplus.com/reference/iomanip/)  
+Guideline&rarr; [HERE](https://42-cursus.gitbook.io/guide/4-rank-04/cpp-00-04-doing/cpp00)  
