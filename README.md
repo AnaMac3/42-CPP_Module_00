@@ -48,7 +48,7 @@ A **namespace** is a declarative region that provides scope to identifiers (vari
 - **Public and Private Members**
   - public: accesible from outside the class
   - private: accesible only within the class
-  - **Encapsulation:** grouping data and functiions together while restricting direct access to internal details.
+  - **Encapsulation:** grouping data and functions together while restricting direct access to internal details.
     - Benefit of private attributes with getters/setters:
       - Input validation
       - Flexibility (implementation changes won't break external code)
