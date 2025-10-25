@@ -54,7 +54,7 @@ A **namespace** is a declarative region that provides scope to identifiers (vari
       - Flexibility (implementation changes won't break external code)
 - **Member Attributes (fields):** variables that store the internal state of the object
 - **Member Functons (methods):** functions that operate on the object's attributes
-- **Static members:** beling to the class itself, not to a specific object.
+- **Static members:** belong to the class itself, not to a specific object.
   - Cannot access non-static members
   - Useful for counters, helpers, or shared state
 - **Accessing members within a class:**
